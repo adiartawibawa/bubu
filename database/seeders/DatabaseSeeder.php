@@ -12,11 +12,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        if ($this->command->confirm('Do you wish to refresh migration before seeding, it will clear all old data ?')) {
+            $this->command->call('migrate:refresh');
+            $this->command->warn("Data cleared, starting from blank database.");
+        }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // $this->command->call("shield:install");
+        $this->command->call('shield:generate', ['--all' => 'policies_and_permissions,policies,permissions']);
+
+        $this->call([
+            // Filament-shield plugin seeder
+            ShieldSeeder::class,
+            // Default user seeder
+            UserSeeder::class,
+        ]);
+
+
+        $this->command->info('Default requirements added.');
     }
 }

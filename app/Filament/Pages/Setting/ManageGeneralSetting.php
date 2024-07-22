@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Pages\Setting;
 
 use App\Settings\GeneralSettings;
 use Filament\Forms;

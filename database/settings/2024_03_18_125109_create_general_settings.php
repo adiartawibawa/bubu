@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\DBAL\Schema\Schema;
 use Spatie\LaravelSettings\Migrations\SettingsMigration;
 
 return new class extends SettingsMigration

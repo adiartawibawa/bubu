@@ -21,19 +21,22 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blueprint::macro('assignUser', function () {
+        Blueprint::macro('assignOrganization', function () {
+            $column = $this->foreignUuid('organization_id');
+
             return tap(
-                $this->foreignUuid('user_id'),
+                $column,
                 fn (ForeignIdColumnDefinition $column) =>
                 $column
+                    ->nullable()
                     ->constrained()
                     ->cascadeOnDelete()
             );
         });
 
-        Blueprint::macro('dropUser', function () {
-            $this->dropForeign(['user_id']);
-            $this->dropColumn('user_id');
+        Blueprint::macro('dropOrganization', function () {
+            $this->dropForeign(['organization_id']);
+            $this->dropColumn('organization_id');
 
             return $this;
         });

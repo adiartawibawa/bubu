@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Organisation;
+use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,19 +16,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $default_organization = Organisation::create([
-            'name' => 'Unorganization'
+        $default_organization = Organization::create([
+            'name' => 'Default Organization'
         ]);
 
-        $disdik_organization = Organisation::create([
-            'name' => 'Dinas Pendidikan Kepemudaan dan Olahraga Kabupaten Badung'
+        $unorganization = Organization::create([
+            'name' => 'Unorganization'
         ]);
 
         // creating users of the application
         $super_admin = User::create([
             'name' => 'Adi Arta Wibawa',
             'email' => 'surat.buat.adi@gmail.com',
-            'organisation_id' => $disdik_organization->id,
+            'organization_id' => $unorganization->id,
             'email_verified_at' => now(),
             'password' => Hash::make('fujiyama'),
             'remember_token' => Str::random(10),
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
         $admin_user = User::create([
             'name' => 'Admin Dinas',
             'email' => 'admindisdik@mail.test',
-            'organisation_id' => $disdik_organization->id,
+            'organization_id' => $unorganization->id,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
         $user = User::create([
             'name' => 'User',
             'email' => 'user@mail.test',
-            'organisation_id' => $default_organization->id,
+            'organization_id' => $default_organization->id,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),

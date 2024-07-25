@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\PostResource\Pages;
+namespace App\Filament\Resources\Cms\PostResource\Pages;
 
-use App\Filament\Resources\PostResource;
+use App\Filament\Resources\Cms\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 

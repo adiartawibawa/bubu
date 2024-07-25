@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\Cms;
 
-use App\Filament\Resources\PageResource\Pages;
-use App\Filament\Resources\PageResource\RelationManagers;
+use App\Filament\Resources\Cms\PageResource\Pages;
 use App\Models\Page;
 use Filament\Forms;
 use Filament\Forms\Components\Hidden;

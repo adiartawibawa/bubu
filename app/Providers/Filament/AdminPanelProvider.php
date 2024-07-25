@@ -2,7 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\EmailVerification;
+use App\Filament\Pages\Auth\RequestPasswordReset;
 use App\Livewire\User\Profile;
+use App\Settings\GeneralSettings;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -17,6 +22,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
@@ -30,9 +36,14 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset(RequestPasswordReset::class)
+            ->emailVerification(EmailVerification::class)
             ->colors([
                 'primary' => Color::Indigo,
             ])
+            ->brandName(fn (GeneralSettings $settings) => $settings->app_name)
+            ->brandLogo(fn (GeneralSettings $settings) => Storage::url($settings->app_logo))
+            ->databaseNotifications()->databaseNotificationsPolling('30s')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -62,24 +73,19 @@ class AdminPanelProvider extends PanelProvider
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 BreezyCore::make()
                     ->myProfile(
-                        shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
-                        shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
-                        navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
-                        hasAvatars: true, // Enables the avatar upload form component (default = false)
-                        slug: 'profile' // Sets the slug for the profile page (default = 'my-profile')
+                        shouldRegisterUserMenu: true,
+                        shouldRegisterNavigation: false,
+                        navigationGroup: 'Settings',
+                        hasAvatars: true,
+                        slug: 'profile'
                     )
-                    ->avatarUploadComponent(fn ($fileUpload) => $fileUpload->disableLabel())
+                    ->avatarUploadComponent(fn () => FileUpload::make('avatar_url')->avatar()->directory('users/profile-photos'))
                     ->passwordUpdateRules(
-                        rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
-                        requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
+                        rules: [Password::default()->mixedCase()->uncompromised(3)],
+                        requiresCurrentPassword: true,
                     )
-                    ->enableTwoFactorAuthentication(
-                        force: false, // force the user to enable 2FA before they can use the application (default = false)
-                        // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
-                    )
-                    ->enableSanctumTokens(
-                        permissions: ["create", "view", "update", "delete"] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
-                    )
+                    ->enableTwoFactorAuthentication(force: false,)
+                    ->enableSanctumTokens(permissions: ["create", "view", "update", "delete"])
             ]);
     }
 }

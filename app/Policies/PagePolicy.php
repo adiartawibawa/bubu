@@ -18,7 +18,7 @@ class PagePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_page');
+        return $user->can('view_any_cms::page');
     }
 
     /**
@@ -30,7 +30,7 @@ class PagePolicy
      */
     public function view(User $user, Page $page): bool
     {
-        return $user->can('view_page');
+        return $user->can('view_cms::page');
     }
 
     /**
@@ -41,7 +41,7 @@ class PagePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_page');
+        return $user->can('create_cms::page');
     }
 
     /**
@@ -53,7 +53,7 @@ class PagePolicy
      */
     public function update(User $user, Page $page): bool
     {
-        return $user->can('update_page');
+        return $user->can('update_cms::page');
     }
 
     /**
@@ -65,7 +65,7 @@ class PagePolicy
      */
     public function delete(User $user, Page $page): bool
     {
-        return $user->can('delete_page');
+        return $user->can('delete_cms::page');
     }
 
     /**
@@ -76,7 +76,7 @@ class PagePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_page');
+        return $user->can('delete_any_cms::page');
     }
 
     /**
@@ -88,7 +88,7 @@ class PagePolicy
      */
     public function forceDelete(User $user, Page $page): bool
     {
-        return $user->can('force_delete_page');
+        return $user->can('force_delete_cms::page');
     }
 
     /**
@@ -99,7 +99,7 @@ class PagePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_page');
+        return $user->can('force_delete_any_cms::page');
     }
 
     /**
@@ -111,7 +111,7 @@ class PagePolicy
      */
     public function restore(User $user, Page $page): bool
     {
-        return $user->can('restore_page');
+        return $user->can('restore_cms::page');
     }
 
     /**
@@ -122,7 +122,7 @@ class PagePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_page');
+        return $user->can('restore_any_cms::page');
     }
 
     /**
@@ -134,7 +134,7 @@ class PagePolicy
      */
     public function replicate(User $user, Page $page): bool
     {
-        return $user->can('replicate_page');
+        return $user->can('replicate_cms::page');
     }
 
     /**
@@ -145,7 +145,7 @@ class PagePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_page');
+        return $user->can('reorder_cms::page');
     }
 
 }

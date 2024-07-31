@@ -26,7 +26,8 @@ class UserSeeder extends Seeder
 
         // creating users of the application
         $super_admin = User::create([
-            'name' => 'Adi Arta Wibawa',
+            'firstname' => 'Adi',
+            'lastname' => 'Arta Wibawa',
             'email' => 'surat.buat.adi@gmail.com',
             'organization_id' => $unorganization->id,
             'email_verified_at' => now(),
@@ -39,8 +40,9 @@ class UserSeeder extends Seeder
         ]);
 
         $admin_user = User::create([
-            'name' => 'Admin Dinas',
-            'email' => 'admindisdik@mail.test',
+            'firstname' => 'Admin',
+            'lastname' => 'Application',
+            'email' => 'admin@mail.test',
             'organization_id' => $unorganization->id,
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
@@ -49,7 +51,8 @@ class UserSeeder extends Seeder
         $admin_user->assignRole('panel_user');
 
         $user = User::create([
-            'name' => 'User',
+            'firstname' => 'User',
+            'lastname' => 'Regular',
             'email' => 'user@mail.test',
             'organization_id' => $default_organization->id,
             'email_verified_at' => now(),
@@ -64,7 +67,7 @@ class UserSeeder extends Seeder
         $this->command->warn('Username is ' . $super_admin->email);
         $this->command->warn('Password is "loveofmylife"');
         $this->command->info('=========================================');
-        $this->command->info('Here is your admindisdik user details to login:');
+        $this->command->info('Here is your admin user details to login:');
         $this->command->info('=========================================');
         $this->command->warn('Username is ' . $admin_user->email);
         $this->command->warn('Password is "password"');

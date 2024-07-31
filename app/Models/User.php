@@ -34,8 +34,9 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'username',
+        'firstname',
+        'lastname',
         'email',
         'password',
         'avatar_url',
@@ -60,6 +61,17 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getFilamentName(): string
+    {
+        return $this->username ?: $this->firstname;
+    }
+
+    // Define an accessor for the 'name' attribute
+    public function getNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 
     public function canAccessPanel(Panel $panel): bool
     {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -27,6 +28,7 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
     use InteractsWithMedia;
     use HasRoles;
     use HasPanelShield;
+    use Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +41,6 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
         'lastname',
         'email',
         'password',
-        'avatar_url',
     ];
 
     /**
@@ -62,9 +63,19 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
         'password' => 'hashed',
     ];
 
+    public function sluggable(): array
+    {
+        return [
+            'username' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+
     public function getFilamentName(): string
     {
-        return $this->username ?: $this->firstname;
+        return $this->username ?: $this->name;
     }
 
     // Define an accessor for the 'name' attribute
@@ -84,7 +95,8 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->avatar_url ? Storage::url($this->avatar_url) : null;
+        // return $this->avatar_url ? Storage::url($this->avatar_url) : null;
+        return $this->getMedia('avatars')?->first()?->getUrl() ?? $this->getMedia('avatars')?->first()?->getUrl('thumb') ?? null;
     }
 
     public function isSuperAdmin(): bool

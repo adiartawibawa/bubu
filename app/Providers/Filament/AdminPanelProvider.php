@@ -4,10 +4,8 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\EmailVerification;
 use App\Filament\Pages\Auth\RequestPasswordReset;
-use App\Livewire\User\Profile;
+use App\Livewire\MyPersonalInfo;
 use App\Settings\GeneralSettings;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -79,7 +77,11 @@ class AdminPanelProvider extends PanelProvider
                         hasAvatars: true,
                         slug: 'profile'
                     )
-                    ->avatarUploadComponent(fn () => FileUpload::make('avatar_url')->avatar()->directory('users/profile-photos'))
+                    ->myProfileComponents([
+                        'personal_info' => MyPersonalInfo::class
+                    ])
+                    // ->avatarUploadComponent(fn () => FileUpload::make('avatar_url')->avatar()->directory('user/{auth()->user()->id}/avatars/{}'))
+                    // ->avatarUploadComponent(fn () => SpatieMediaLibraryFileUpload::make('media')->hiddenLabel()->avatar()->collection('avatars'))
                     ->passwordUpdateRules(
                         rules: [Password::default()->mixedCase()->uncompromised(3)],
                         requiresCurrentPassword: true,

@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
 
         // creating users of the application
         $super_admin = User::create([
+            'username' => 'superadmin',
             'firstname' => 'Adi',
             'lastname' => 'Arta Wibawa',
             'email' => 'surat.buat.adi@gmail.com',
@@ -40,6 +41,7 @@ class UserSeeder extends Seeder
         ]);
 
         $admin_user = User::create([
+            'username' => 'admin_application',
             'firstname' => 'Admin',
             'lastname' => 'Application',
             'email' => 'admin@mail.test',
@@ -51,6 +53,7 @@ class UserSeeder extends Seeder
         $admin_user->assignRole('panel_user');
 
         $user = User::create([
+            'username' => 'user_regular',
             'firstname' => 'User',
             'lastname' => 'Regular',
             'email' => 'user@mail.test',

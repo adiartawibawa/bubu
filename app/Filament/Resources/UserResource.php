@@ -18,6 +18,7 @@ use Filament\Notifications\Auth\VerifyEmail;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,7 +56,6 @@ class UserResource extends Resource
                                     ->alignCenter()
                                     ->columnSpanFull(),
                                 Forms\Components\TextInput::make('username')
-                                    ->required()
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('email')
                                     ->email()
@@ -83,7 +83,6 @@ class UserResource extends Resource
                                     ->getOptionLabelFromRecordUsing(fn (Model $record) => Str::headline($record->name))
                                     ->multiple()
                                     ->preload()
-                                    ->maxItems(1)
                                     ->native(false),
                             ])
                             ->compact(),
@@ -172,14 +171,21 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar_url')
-                    ->label('Avatar')
-                    ->defaultImageUrl(fn (User $user) => url('https://gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?d=mp'))
-                    ->circular(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                // Tables\Columns\ImageColumn::make('avatar_url')
+                //     ->label('Avatar')
+                //     ->defaultImageUrl(fn (User $user) => url('https://gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?d=mp'))
+                //     ->circular(),
+                SpatieMediaLibraryImageColumn::make('media')->label('Avatar')
+                    ->collection('avatars')
+                    ->circular()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('username')
+                    ->description(fn (Model $record) => $record->firstname . ' ' . $record->lastname)
                     ->searchable(),
+                Tables\Columns\TextColumn::make('roles.name')->label('Role')
+                    ->formatStateUsing(fn ($state): string => Str::headline($state))
+                    ->colors(['info'])
+                    ->badge(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('email_verified_at')

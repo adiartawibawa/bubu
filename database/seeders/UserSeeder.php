@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ]);
-        $admin_user->assignRole('panel_user');
+        $admin_user->assignRole('admin');
 
         $user = User::create([
             'username' => 'user_regular',

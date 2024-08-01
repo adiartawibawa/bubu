@@ -7,5 +7,6 @@ export default {
         "./resources/views/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
         "./vendor/solution-forest/filament-tree/resources/**/*.blade.php",
+        "./vendor/bezhansalleh/filament-exceptions/resources/views/**/*.blade.php", // Language Switch Views
     ],
 };

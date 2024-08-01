@@ -66,9 +66,13 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->resources([
+                config('filament-logger.activity_resource')
+            ])
             ->authGuard('web')
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                \BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin::make(),
                 BreezyCore::make()
                     ->myProfile(
                         shouldRegisterUserMenu: true,
@@ -80,8 +84,6 @@ class AdminPanelProvider extends PanelProvider
                     ->myProfileComponents([
                         'personal_info' => MyPersonalInfo::class
                     ])
-                    // ->avatarUploadComponent(fn () => FileUpload::make('avatar_url')->avatar()->directory('user/{auth()->user()->id}/avatars/{}'))
-                    // ->avatarUploadComponent(fn () => SpatieMediaLibraryFileUpload::make('media')->hiddenLabel()->avatar()->collection('avatars'))
                     ->passwordUpdateRules(
                         rules: [Password::default()->mixedCase()->uncompromised(3)],
                         requiresCurrentPassword: true,

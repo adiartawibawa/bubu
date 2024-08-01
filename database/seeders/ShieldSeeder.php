@@ -13,11 +13,11 @@ class ShieldSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Role::firstOrCreate(['name' => 'user']);
+        Role::firstOrCreate(['name' => 'user']) && Role::firstOrCreate(['name' => 'admin']);
 
         $rolesWithPermissions = '[
-            {"name":"super_admin","guard_name":"web","permissions":["view_desa","view_any_desa","create_desa","update_desa","restore_desa","restore_any_desa","replicate_desa","reorder_desa","delete_desa","delete_any_desa","force_delete_desa","force_delete_any_desa","view_kabupaten","view_any_kabupaten","create_kabupaten","update_kabupaten","restore_kabupaten","restore_any_kabupaten","replicate_kabupaten","reorder_kabupaten","delete_kabupaten","delete_any_kabupaten","force_delete_kabupaten","force_delete_any_kabupaten","view_kecamatan","view_any_kecamatan","create_kecamatan","update_kecamatan","restore_kecamatan","restore_any_kecamatan","replicate_kecamatan","reorder_kecamatan","delete_kecamatan","delete_any_kecamatan","force_delete_kecamatan","force_delete_any_kecamatan","view_provinsi","view_any_provinsi","create_provinsi","update_provinsi","restore_provinsi","restore_any_provinsi","replicate_provinsi","reorder_provinsi","delete_provinsi","delete_any_provinsi","force_delete_provinsi","force_delete_any_provinsi","view_role","view_any_role","create_role","update_role","delete_role","delete_any_role","view_user","view_any_user","create_user","update_user","restore_user","restore_any_user","replicate_user","reorder_user","delete_user","delete_any_user","force_delete_user","force_delete_any_user"]},
-            {"name":"panel_user","guard_name":"web","permissions":[]},
+            {"name":"super_admin","guard_name":"web","permissions":["view_role","view_any_role","create_role","update_role","delete_role","delete_any_role","view_user","view_any_user","create_user","update_user","restore_user","restore_any_user","replicate_user","reorder_user","delete_user","delete_any_user","force_delete_user","force_delete_any_user"]},
+            {"name":"admin","guard_name":"web","permissions":["view_user","view_any_user","create_user","update_user","restore_user","restore_any_user","replicate_user","reorder_user","delete_user","delete_any_user","force_delete_user","force_delete_any_user"]},
             {"name":"user","guard_name":"web","permissions":[]},
             ]';
         $directPermissions = '[]';

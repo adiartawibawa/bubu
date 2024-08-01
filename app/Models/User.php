@@ -27,7 +27,6 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
     use SoftDeletes;
     use InteractsWithMedia;
     use HasRoles;
-    use HasPanelShield;
     use Sluggable;
 
     /**

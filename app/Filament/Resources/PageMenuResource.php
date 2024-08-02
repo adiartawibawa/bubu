@@ -18,14 +18,6 @@ class PageMenuResource extends Resource
 {
     protected static ?string $model = PageMenu::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
-
-    protected static ?string $navigationGroup = 'Manages Application';
-
-    protected static ?string $navigationLabel = 'Menus';
-
-    protected static ?int $navigationSort = 3;
-
     // you can customize the maximum depth of your tree
     protected static int $maxDepth = 2;
 
@@ -73,5 +65,25 @@ class PageMenuResource extends Resource
         return [
             'index' => Pages\PageMenuTree::route('/')
         ];
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("resource.menu.nav.group");
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('resource.menu.nav.log.label');
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return __('resource.menu.nav.log.icon');
     }
 }

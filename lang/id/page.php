@@ -7,6 +7,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'general_settings' => [
+        'nav' => [
+            "group" => 'Pengaturan',
+            "icon" => 'heroicon-o-cog-6-tooth',
+            "sort" => 1,
+        ],
         'title' => 'Pengaturan Umum',
         'heading' => 'Pengaturan Umum',
         'subheading' => 'Kelola pengaturan situs umum di sini.',
@@ -22,18 +27,15 @@ return [
             ],
         ],
         "fields" => [
-            "brand_name" => "Nama Merek",
+            "app_name" => "Nama Aplikasi",
+            "app_desc" => "Deskripsi Aplikasi",
+            "app_contact" => "Kontak Telepon",
+            "app_mail" => "Kontak Email",
+            "app_timezone" => "Zona Waktu",
+            "app_locale" => "Lokal Aplikasi",
             "site_active" => "Status Situs",
-            "brand_logoHeight" => "Tinggi Logo Merek",
-            "brand_logo" => "Logo Merek",
+            "app_logo" => "Logo Aplikasi",
             "site_favicon" => "Favicon Situs",
-            "primary" => "Utama",
-            "secondary" => "Sekunder",
-            "gray" => "Abu-abu",
-            "success" => "Berhasil",
-            "danger" => "Bahaya",
-            "info" => "Info",
-            "warning" => "Peringatan",
         ]
     ],
 
@@ -43,6 +45,10 @@ return [
     |--------------------------------------------------------------------------
     */
     'mail_settings' => [
+        'nav' => [
+            "group" => 'Pengaturan',
+            "icon" => 'heroicon-o-at-symbol',
+        ],
         'title' => 'Pengaturan Surat',
         'heading' => 'Pengaturan Surat',
         'subheading' => 'Kelola konfigurasi surat.',

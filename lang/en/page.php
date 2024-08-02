@@ -7,6 +7,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'general_settings' => [
+        'nav' => [
+            "group" => 'Settings',
+            "icon" => 'heroicon-o-cog-6-tooth',
+            "sort" => 1,
+        ],
         'title' => 'General Settings',
         'heading' => 'General Settings',
         'subheading' => 'Manage general site settings here.',
@@ -22,18 +27,15 @@ return [
             ],
         ],
         "fields" => [
-            "brand_name" => "Brand Name",
+            "app_name" => "Application Name",
+            "app_desc" => "Description of Application",
+            "app_contact" => "Contact Phone",
+            "app_mail" => "Contact Email",
+            "app_timezone" => "Application Timezone",
+            "app_locale" => "Application Locale",
             "site_active" => "Site Status",
-            "brand_logoHeight" => "Brand Logo Height",
-            "brand_logo" => "Brand Logo",
+            "app_logo" => "Application Logo",
             "site_favicon" => "Site Favicon",
-            "primary" => "Primary",
-            "secondary" => "Secondary",
-            "gray" => "Gray",
-            "success" => "Success",
-            "danger" => "Danger",
-            "info" => "Info",
-            "warning" => "Warning",
         ]
     ],
 
@@ -43,6 +45,11 @@ return [
     |--------------------------------------------------------------------------
     */
     'mail_settings' => [
+        'nav' => [
+            "group" => 'Settings',
+            "icon" => 'heroicon-o-at-symbol',
+            "sort" => 2,
+        ],
         'title' => 'Mail Settings',
         'heading' => 'Mail Settings',
         'subheading' => 'Manage mail configuration.',

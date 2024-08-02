@@ -23,12 +23,6 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
-
-    protected static ?string $navigationGroup = 'Manages Content';
-
-    protected static ?int $navigationSort = 1;
-
     public static function form(Form $form): Form
     {
         return $form
@@ -132,5 +126,25 @@ class PostResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("resource.post.nav.group");
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('resource.post.nav.log.label');
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return __('resource.post.nav.log.icon');
     }
 }

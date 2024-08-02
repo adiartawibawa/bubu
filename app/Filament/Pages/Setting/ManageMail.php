@@ -21,14 +21,6 @@ class ManageMail extends SettingsPage
 
     protected static string $settings = MailSettings::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-at-symbol';
-
-    protected static ?string $navigationGroup = 'Manages Application';
-
-    protected static ?string $navigationLabel = 'Mail Setting';
-
-    protected static ?int $navigationSort = 3;
-
     /**
      * @var array<string, mixed> | null
      */
@@ -193,10 +185,15 @@ class ManageMail extends SettingsPage
             ->send();
     }
 
-    // public static function getNavigationGroup(): ?string
-    // {
-    //     return __("menu.nav_group.settings");
-    // }
+    public static function getNavigationGroup(): ?string
+    {
+        return __("page.mail_settings.nav.group");
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return __('page.mail_settings.nav.icon');
+    }
 
     public static function getNavigationLabel(): string
     {

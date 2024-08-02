@@ -15,12 +15,6 @@ use Tapp\FilamentTimezoneField\Forms\Components\TimezoneSelect;
 
 class ManageGeneralSetting extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
-
-    protected static ?string $navigationGroup = 'Manages Application';
-
-    protected static ?int $navigationSort = 3;
-
     protected static string $settings = GeneralSettings::class;
 
     public function form(Form $form): Form
@@ -28,25 +22,25 @@ class ManageGeneralSetting extends SettingsPage
         return $form
             ->schema([
                 TextInput::make('app_name')
-                    ->label('Application Name')
+                    ->label(fn () => __("page.general_settings.fields.app_name"))
                     ->required(),
                 Textarea::make('app_desc')
-                    ->label('Application Description')
+                    ->label(fn () => __("page.general_settings.fields.app_desc"))
                     ->columnSpanFull()
                     ->required(),
                 TextInput::make('app_phone')
-                    ->label('Contact phone')
+                    ->label(fn () => __("page.general_settings.fields.app_contact"))
                     ->required(),
                 TextInput::make('app_mail')
-                    ->label('Contact e-Mail')
+                    ->label(fn () => __("page.general_settings.fields.app_mail"))
                     ->required(),
                 TimezoneSelect::make('app_timezone')
-                    ->label('Application Timezone')
+                    ->label(fn () => __("page.general_settings.fields.app_timezone"))
                     ->timezoneType('UTC')
                     ->searchable()
                     ->required(),
                 Select::make('app_locale')
-                    ->label('Application Locale')
+                    ->label(fn () => __("page.general_settings.fields.app_locale"))
                     ->options([
                         'id' => 'ID - Indonesia',
                         'en' => 'EN - English(US)',
@@ -54,15 +48,45 @@ class ManageGeneralSetting extends SettingsPage
                     ->required(),
                 FileUpload::make('app_favicon')
                     ->directory('settings/general')
-                    ->label('Application Favicon'),
+                    ->label(fn () => __("page.general_settings.fields.site_favicon")),
                 FileUpload::make('app_logo')
                     ->directory('settings/general')
-                    ->label('Application Logo'),
+                    ->label(fn () => __("page.general_settings.fields.app_logo")),
                 Toggle::make('app_active')
-                    ->label('is active')
+                    ->label(fn () => __("page.general_settings.fields.site_active"))
                     ->onIcon('heroicon-m-bolt')
                     ->offIcon('heroicon-m-bolt-slash')
                     ->default(true),
             ]);
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("page.general_settings.nav.group");
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return __('page.general_settings.nav.icon');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __("page.general_settings.navigationLabel");
+    }
+
+    public function getTitle(): string
+    {
+        return __("page.general_settings.title");
+    }
+
+    public function getHeading(): string
+    {
+        return __("page.general_settings.heading");
+    }
+
+    public function getSubheading(): string
+    {
+        return __("page.general_settings.subheading");
     }
 }

@@ -33,14 +33,6 @@ class UserResource extends Resource
 
     protected static int $globalSearchResultsLimit = 20;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
-
-    protected static ?string $navigationLabel = 'Users';
-
-    // protected static ?string $navigationGroup = 'Manages Application';
-
-    protected static ?int $navigationSort = 1;
-
     public static function form(Form $form): Form
     {
         return $form
@@ -279,5 +271,15 @@ class UserResource extends Resource
             ->title(__('resource.user.notifications.notification_resent.title'))
             ->success()
             ->send();
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __("resource.user.nav.label");
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return __("resource.user.nav.icon");
     }
 }

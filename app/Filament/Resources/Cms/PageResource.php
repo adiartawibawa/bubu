@@ -22,12 +22,6 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
-    protected static ?string $navigationGroup = 'Manages Content';
-
-    protected static ?int $navigationSort = 2;
-
     public static function form(Form $form): Form
     {
         return $form
@@ -128,5 +122,25 @@ class PageResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 0;
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("resource.page.nav.group");
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('resource.page.nav.log.label');
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return __('resource.page.nav.log.icon');
     }
 }

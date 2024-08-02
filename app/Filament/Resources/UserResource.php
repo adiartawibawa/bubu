@@ -18,12 +18,14 @@ use Filament\Notifications\Auth\VerifyEmail;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -69,13 +71,18 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\Section::make('Role')
                             ->schema([
-                                Select::make('roles')->label('Role')
+                                Select::make('roles')
+                                    ->label('Role')
                                     ->hiddenLabel()
-                                    ->relationship('roles', 'name')
+                                    ->relationship('roles', 'name', function ($query) {
+                                        if (!Auth::user()->isSuperAdmin()) {
+                                            $query->where('name', '!=', config('filament-shield.super_admin.name'));
+                                        }
+                                    })
                                     ->getOptionLabelFromRecordUsing(fn (Model $record) => Str::headline($record->name))
                                     ->multiple()
                                     ->preload()
-                                    ->native(false),
+                                    ->native(false)
                             ])
                             ->compact(),
                         Forms\Components\Section::make()
@@ -121,55 +128,19 @@ class UserResource extends Resource
                     ->columnSpan(1),
             ])
             ->columns(3);
-
-        // return $form
-        //     ->schema([
-        //         Forms\Components\TextInput::make('name')
-        //             ->required()
-        //             ->maxLength(255),
-        //         Forms\Components\TextInput::make('username')
-        //             ->maxLength(255),
-        //         Forms\Components\TextInput::make('email')
-        //             ->email()
-        //             ->label('Email Address')
-        //             ->required()
-        //             ->maxLength(255),
-        //         Forms\Components\Select::make('roles')
-        //             ->relationship('roles', 'name')
-        //             ->hidden(fn (): bool => !auth()->user()->hasRole(['super_admin']))
-        //             ->default('panel_user')
-        //             ->required(),
-        //         Forms\Components\DateTimePicker::make('email_verified_at'),
-        //         Forms\Components\TextInput::make('password')
-        //             ->password()
-        //             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
-        //             ->same('password_confirmation')
-        //             ->maxLength(255)
-        //             ->dehydrated(fn ($state) => filled($state))
-        //             ->dehydrateStateUsing(fn ($state) => Hash::make($state)),
-        //         Forms\Components\TextInput::make('password_confirmation')
-        //             ->password()
-        //             ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
-        //             ->same('password_confirmation')
-        //             ->maxLength(255)
-        //             ->dehydrated(false),
-        //         SpatieMediaLibraryFileUpload::make('avatar_url')
-        //             ->label('Avatar')
-        //             ->collection('users/profile-photos'),
-        //     ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                // Tables\Columns\ImageColumn::make('avatar_url')
-                //     ->label('Avatar')
-                //     ->defaultImageUrl(fn (User $user) => url('https://gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?d=mp'))
-                //     ->circular(),
-                SpatieMediaLibraryImageColumn::make('media')->label('Avatar')
-                    ->collection('avatars')
+                Tables\Columns\ImageColumn::make('avatar_url')
+                    ->label('Avatar')
                     ->circular()
+                    ->extraImgAttributes(fn (User $record): array => [
+                        'alt' => "{$record->name} avatar",
+                        'loading' => 'lazy'
+                    ])
                     ->wrap(),
                 Tables\Columns\TextColumn::make('username')
                     ->description(fn (Model $record) => $record->firstname . ' ' . $record->lastname)
@@ -180,9 +151,6 @@ class UserResource extends Resource
                     ->badge(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('email_verified_at')
-                //     ->dateTime()
-                //     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

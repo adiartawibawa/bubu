@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
@@ -13,7 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Jeffgreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
@@ -85,21 +83,31 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasAvatar,
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // if ($panel->getId() === 'admin') {
-        //     return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
-        // }
-
         return true;
     }
 
     public function getFilamentAvatarUrl(): ?string
     {
-        // return $this->avatar_url ? Storage::url($this->avatar_url) : null;
-        return $this->getMedia('avatars')?->first()?->getUrl() ?? $this->getMedia('avatars')?->first()?->getUrl('thumb') ?? null;
+        return $this->getMedia('avatars')?->first()?->getUrl() ?? $this->defaultAvatar();
     }
 
     public function isSuperAdmin(): bool
     {
         return $this->hasRole(config('filament-shield.super_admin.name'));
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->getMedia('avatars')?->last()?->getUrl() ?? $this->defaultAvatar();
+    }
+
+    private function defaultAvatar(): ?string
+    {
+        return 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?d=mp';
     }
 }

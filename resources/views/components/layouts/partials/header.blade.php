@@ -101,7 +101,7 @@
                 </div>
                 <div x-data="{ isOpen: true }" class="relative">
                     <button @click="isOpen = !isOpen" class="relative block">
-                        <img alt="profil" src="https://gravatar.com/avatar/{{ md5(Auth::user()->email) }}"
+                        <img alt="profil" src="{{ auth()->user()->avatar_url ?? auth()->user()->defaultAvatar }}"
                             class="mx-auto object-cover rounded-xl h-10 w-10 " />
                     </button>
                     <!-- Dropdown menu -->

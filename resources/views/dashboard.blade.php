@@ -1,4 +1,7 @@
 <x-layouts.app>
+
+    @section('title', 'Dashboard')
+
     <x-slot name="header">
         <h1 class="text-2xl font-semibold text-slate-600">Dashboard</h1>
         <p class="text-sm font-normal">Lorem ipsum</p>

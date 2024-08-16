@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
     ])->toArray(),
 
     /*

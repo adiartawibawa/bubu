@@ -1,5 +1,5 @@
 <a href="#">
-    <div class="w-full font-black uppercase text-2xl">{{ config('app.name') }}</div>
+    <div class="w-full font-black uppercase text-2xl">{{ $meta['app_name'] ?? config('app.name') }}</div>
 </a>
 <div class="flex flex-col justify-between flex-1 mt-6">
     <nav class="-mx-3 space-y-6 ">

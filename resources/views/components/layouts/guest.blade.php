@@ -1,3 +1,5 @@
 <x-layouts.main>
-    {{ $slot }}
+    <div>
+        {{ $slot }}
+    </div>
 </x-layouts.main>

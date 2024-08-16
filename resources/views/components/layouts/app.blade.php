@@ -33,7 +33,7 @@
                         <div class="flex flex-row items-center justify-between ">
                             <div>
                                 ©️ {{ date('Y') }}. <a class="text-indigo-700"
-                                    href="#">{{ config('app.name') }}</a>
+                                    href="#">{{ $meta['app_name'] ?? config('app.name') }}</a>
                             </div>
                             <div>
                                 made with ❤️ by <a href="https://wa.me/+6281916175060" target="_blank"
